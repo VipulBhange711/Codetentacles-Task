@@ -4,22 +4,22 @@
 <body class="hold-transition login-page">
   <div class="login-box">
     <div class="login-logo">
-      <a href="../../index2.html"><b>Syn</b>Karma</a>
+      <a href=""><b>Code</b>Tentacles</a>
     </div>
     <!-- /.login-logo -->
     <div class="card">
       <div class="card-body login-card-body">
-        <p class="login-box-msg">Sign in to As Employee  or Dealer</p>
+        <p class="login-box-msg">Sign in to As User  or Admin</p>
 
         <form action="{{route('login.post')}}" method="post">
           @csrf
 
           <div class="btn-group btn-group-toggle mb-3 offset-3" data-toggle="buttons">
             <label class="btn bg-olive">
-              <input type="radio" name="type" id="option_b2" value="employee"  autocomplete="off"> Employee
+              <input type="radio" name="type" id="option_b2" value="User"  autocomplete="off"> User
             </label>
             <label class="btn bg-olive">
-              <input type="radio" name="type" id="option_b3" value="dealer" autocomplete="off"> Dealer
+              <input type="radio" name="type" id="option_b3" value="Admin" autocomplete="off"> Admin
             </label>
           </div>
 

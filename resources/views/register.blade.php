@@ -3,7 +3,8 @@
 <body class="hold-transition register-page">
   <div class="register-box">
     <div class="register-logo">
-      <a href="../../index2.html"><b>Syn</b>Karma</a>
+    <a href=""><b>Code</b>Tentacles</a>
+
     </div>
 
     <div class="card">
@@ -15,10 +16,10 @@
 
           <div class="btn-group btn-group-toggle mb-3 offset-3" data-toggle="buttons">
             <label class="btn bg-olive">
-              <input type="radio" name="type" id="option_b2" value="employee"  autocomplete="off"> Employee
+              <input type="radio" name="type" id="option_b2" value="Admin"  autocomplete="off"> Admin
             </label>
             <label class="btn bg-olive">
-              <input type="radio" name="type" id="option_b3" value="dealer" autocomplete="off"> Dealer
+              <input type="radio" name="type" id="option_b3" value="User" autocomplete="off"> User
             </label>
           </div>
 

@@ -6,21 +6,18 @@
 
 <h1>wecome {{Auth::user()->type}}</h1>
 
-@if(Auth::user()->type === 'dealer' && (empty(Auth::user()->city)) )
+@if(Auth::user()->type === 'User' && (empty(Auth::user()->city)) )
 
 <h3 class="display-4">
-    You login First Time as a dealer You need to fill the required Information first
+    You login First Time as a User You need to fill the required Information first
 </h3>
 
 <div class="col-4 offset-4">
     <form action="{{route('addinfo.post')}}" method="post">
         @csrf
-
         <input type="hidden" value="{{Auth::user()->id}}" name="id">
         <div class="form-group">
-
             <select onchange="print_city('state', this.selectedIndex);" id="sts" name="stt" class="form-control">
-
             </select>
         </div>
         <div class="form-group">

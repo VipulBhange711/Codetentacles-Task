@@ -17,7 +17,8 @@ class AuthController extends Controller
     public function test(){
       $data =   DB::select('select * from users where name = "Admin" ' );
 
-      dd($data);
+    //   dd($data);
+
     }
     public function index(Request $request)
     {
