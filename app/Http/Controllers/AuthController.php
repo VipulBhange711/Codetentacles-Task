@@ -89,7 +89,8 @@ class AuthController extends Controller
     public function dashboard()
     {
         if (Auth::check()) {
-            return view('welcome');
+            $users = DB::table('Product')->get();
+            return view('welcome',compact('users'));
         } else {
             return redirect()->route('login.get');
         }

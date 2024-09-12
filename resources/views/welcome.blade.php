@@ -1,194 +1,105 @@
 <x-head />
+<x-nav />
 
-<a href="{{route('logout.get')}}" class="btn btn-danger">
-    logout
-</a>
+<div class="container ">
+    <div class="row ">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Launch demo modal
+        </button>
+    </div>
+</div>
 
-<h1>wecome {{Auth::user()->type}}</h1>
+<div class="container " style="margin-top:50px">
+    <div class="row">
 
-@if(Auth::user()->type === 'User' && (empty(Auth::user()->city)) )
+        <div class="col-6">
+            <!-- Button trigger modal -->
+            <form action="{{route('upload.post')}}" method="POST" enctype="multipart/form-data">
+                @CSRF
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Product</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
 
-<h3 class="display-4">
-    You login First Time as a User You need to fill the required Information first
-</h3>
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Product Name</label>
+                                    <input type="text" class="form-control" name="productName">
+                                    @if($errors->has('productName'))
+                                    <div class="text-danger"> {{$errors->first('productName')}} </div>
+                                    @endif
+                                </div>
 
-<div class="col-4 offset-4">
-    <form action="{{route('addinfo.post')}}" method="post">
+                                <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Product Price</label>
+                                    <input type="text" class="form-control" name="productPrice">
+                                    @if($errors->has('productPrice'))
+                                    <div class="text-danger"> {{$errors->first('productPrice')}} </div>
+                                    @endif
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Product Image</label>
+                                    <input type="file" class="form-control" name="productImage"
+                                        accept=".jpg,.png,.jpeg">
+                                        @if($errors->has('productImage'))
+                                    <div class="text-danger"> {{$errors->first('productImage')}} </div>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+<div class="row">
+    <div class="col-6">
+        @if (session('status'))
+            <div class="alert alert-success">
+                {{session('status')}}
+            </div>
+        @endif
+    </div>
+</div>
+</div>
+
+
+<div class="row">
+@foreach ($users as $user)
+    <div class="col-2">
+
+
+    <img class="img-fluid img-thumbnail" src="{{asset('/storage/'.$user->productImage)}}" alt="" >
+
+    <form action="{{route('delete.post',$user->id)}}" method="POST">
         @csrf
-        <input type="hidden" value="{{Auth::user()->id}}" name="id">
-        <div class="form-group">
-            <select onchange="print_city('state', this.selectedIndex);" id="sts" name="stt" class="form-control">
-            </select>
-        </div>
-        <div class="form-group">
-
-            <select id="state" placeholder="city" name="city" class="form-control">
-
-            </select>
-        </div>
-
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Zip Code" name="zip">
-            <div class="input-group-append">
-            </div>
-        </div>
-
-
-        <script language="javascript">
-            print_state("sts");
-        </script>
-
-        <div class="row">
-            <div class="col-12">
-                <button type="submit" class="btn  text-white btn-block" style="background-color: blueviolet;">Add Info</button>
-            </div>
-        </div>
+        @method('DELETE')
+        <button type="submit" class="btn btn-danger btn-sm mb-3">Delete</button>
     </form>
+        <a href="" class="btn btn-warning">Update</a>
+
+    </div>
+    @endforeach
 </div>
 
-@endif
-
-
-
-
-@if(Auth::user()->type === 'employee')
-
-
-@endif
-
-<div class="col-8 offset-2">
-    <table class="table table-bordered data-table">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>city</th>
-                <th>state</th>
-                <th>zip</th>
-                <th width="">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-
-</div>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <form action="{{route('changeinfo.post')}}" method="post">
-        @csrf
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">User Data</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
 <x-foot />
 
 <script type="text/javascript">
-    $(function() {
 
-        var table = $('.data-table').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('users.index') }}",
-            columns: [{
-                    data: 'id',
-                    name: 'id'
-                },
-                {
-                    data: 'name',
-                    name: 'name'
-                },
-                {
-                    data: 'email',
-                    name: 'email'
-                },
-                {
-                    data: 'city',
-                    name: 'city'
-                },
-                {
-                    data: 'state',
-                    name: 'state'
-                },
-                {
-                    data: 'zip',
-                    name: 'zip'
-                },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false,
-                    render: function(data, type, row) {
-                        return `
-                            <button type="button" class="btn btn-primary view-details" data-id="${row.id}" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            View
-                            </button>
-                        `;
-                    }
-                },
-            ]
-        });
-
-    });
-    $(document).on('click', '.view-details', function() {
-        var userId = $(this).data('id');
-
-        // console.log(userId);
-
-        $.ajax({
-            url: "{{ route('users.show', '') }}/" + userId,
-            method: 'GET',
-            success: function(response) {
-                $('#exampleModal .modal-body').html(`
-
-                          <div class="input-group mb-3">
-                            <input type="hidden" class="form-control" placeholder="Zip Code" name="id" value=" ${response.id}">
-                            <div class="input-group-append">
-                            </div>
-                         </div>
-
-                          <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Zip Code" name="name" value=" ${response.name}" disabled>
-                            <div class="input-group-append">
-                            </div>
-                         </div>
-
-                         
-                         
-                         <div class="input-group mb-3">
-                           <input type="text" class="form-control" placeholder="Zip Code" name="city" value=" ${response.city}">
-                           <div class="input-group-append">
-                           </div>
-                        </div>
-
-                         <div class="input-group mb-3">
-                           <input type="text" class="form-control" placeholder="Zip Code" name="state" value=" ${response.state}">
-                           <div class="input-group-append">
-                           </div>
-                        </div>
-
-                         <div class="input-group mb-3">
-                           <input type="text" class="form-control" placeholder="Zip Code" name="zip" value=" ${response.zip}">
-                           <div class="input-group-append">
-                           </div>
-                        </div>
-                
-                    `);
-            }
-        });
-    });
 </script>
