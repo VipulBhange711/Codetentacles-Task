@@ -25,3 +25,4 @@ Route::get('/logout',[AuthController::class,'logout'])->name('logout.get');
 
 Route::POST('/upload',[ImgController::class,'upload'])->name('upload.post');
 Route::DELETE('/delete/{id}',[ImgController::class,'delete'])->name('delete.post');
+Route::POST('/update',[ImgController::class,'update'])->name('update.post');

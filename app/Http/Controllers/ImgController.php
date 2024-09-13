@@ -30,6 +30,32 @@ class ImgController extends Controller
         return redirect()->route('dashboard.get')->with('status','User Image Upload Successfully.');
 
     }
+    public function update(Request $request){
+
+        // dd($request->all());
+
+        $ProductName = $request->productName;
+        $PriceName = $request->productPrice;
+        $id = $request->id;
+        $file = $request->file('productImage');
+
+        $data = $request->validate([
+                'productName' => 'required',
+                'productPrice' => 'required',
+                'productImage' => 'required ',
+        ]);
+
+
+        $path = $request->file('productImage')->store('image','public');
+
+      DB::table('Product')->where('id',$id)->update(
+             ['productName' => $ProductName,
+            'productPrice' => $PriceName,
+            'productImage' => $path ]
+        );
+        return redirect()->route('dashboard.get')->with('status','User Data Update Successfully.');
+
+    }
 
     public function delete(Request $request,$id){
 
