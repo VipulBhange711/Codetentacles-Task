@@ -2,14 +2,16 @@
 <x-nav />
 
 <div class="container ">
+@if(Auth::user()->type === "Admin")
     <div class="row ">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Launch demo modal
         </button>
     </div>
+@endif
 </div>
 
-<div class="container " style="margin-top:50px">
+
     <div class="row">
 
         <div class="col-6">
@@ -48,7 +50,7 @@
                                     <label for="exampleInputPassword1" class="form-label">Product Image</label>
                                     <input type="file" class="form-control" name="productImage"
                                         accept=".jpg,.png,.jpeg">
-                                        @if($errors->has('productImage'))
+                                    @if($errors->has('productImage'))
                                     <div class="text-danger"> {{$errors->first('productImage')}} </div>
                                     @endif
                                 </div>
@@ -66,37 +68,53 @@
     </div>
 </div>
 
-<div class="container">
 
-<div class="row">
-    <div class="col-6">
-        @if (session('status'))
+
+    <div class="row">
+        <div class="col-6">
+            @if (session('status'))
             <div class="alert alert-success">
                 {{session('status')}}
             </div>
-        @endif
+            @endif
+        </div>
     </div>
-</div>
 </div>
 
 
 <div class="row">
-@foreach ($users as $user)
-    <div class="col-2">
 
 
-    <img class="img-fluid img-thumbnail" src="{{asset('/storage/'.$user->productImage)}}" alt="" >
+</div>
 
-    <form action="{{route('delete.post',$user->id)}}" method="POST">
-        @csrf
-        @method('DELETE')
-        <button type="submit" class="btn btn-danger btn-sm mb-3">Delete</button>
-    </form>
-        <a href="" class="btn btn-warning">Update</a>
+<div class="container border">
+    <div class="row">
+
+        @foreach ($users as $user)
+
+        <div class="col-3 bg-dark p-1 ">
+            <p class="card-title">{{$user->productName}}</p>
+            <p class=" text-right">{{$user->productPrice}}</p>
+            <hr style=" border: 5px solid yellow; border-radius: 5px;">
+            <img class="img-fluid img-thumbnail card-img-top mb-3" src="{{asset('/storage/'.$user->productImage)}}"
+                alt="">
+        @if(Auth::user()->type === "Admin")
+
+
+            <form action="{{route('delete.post',$user->id)}}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger ">Delete</button>
+                <a href="" class="btn btn-warning " style="margin-left:120px">Update</a>
+            </form>
+            @endif
+        </div>
+
+        @endforeach
 
     </div>
-    @endforeach
 </div>
+
 
 <x-foot />
 
